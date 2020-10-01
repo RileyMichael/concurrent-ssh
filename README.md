@@ -2,11 +2,12 @@
 easily execute ssh commands against multiple hosts
 
 ## usage
-you can pass target hosts as comma separated inputs with `--targets` or `-t` shorthand:
+you can pass target hosts as comma separated inputs with `--targets` or `-t` shorthand (brace expansion is supported):
 ```bash
-cssh --targets host1,host2
-cssh -t host1,host2
+cssh --targets host{1..3},host10
+cssh -t host1,host2,host3,host10
 ```
+
 or as a newline separated file with `--file` or `-f` shorthand:
 ```bash
 cssh --file /some/file/path
@@ -18,13 +19,12 @@ you can also pass args to ssh itself like so:
 cssh --targets host1,host2 -- -o StrictHostKeyChecking=no whoami
 ```
 
-You can override default concurrency limit of 25 by passing in `--limit` or `-l` shorthand
+override default concurrency limit of 25 by passing in `--limit` or `-l` shorthand
 ```bash
 cssh --targets host1,host2 --limit 1 -- date
 ```
 
 ## todo
-- expansion of targets (something like `--targets 127.0.0.{1..3}`)
 - better output (prepend hosts for clarity / blocks / colors)
 - tests (lol)
 - benchmark against pssh (anecdotally this is marginally faster on my machine with 1-10 hosts)

@@ -4,6 +4,8 @@ go 1.14
 
 require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/kujtimiihoxha/go-balanced-match v0.0.0-20190729224446-46f5cf369ec1 // indirect
+	github.com/kujtimiihoxha/go-brace-expansion v0.0.0-20190729224542-0df038447e67 // indirect
 	github.com/mitchellh/mapstructure v1.3.2 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
 	github.com/spf13/afero v1.3.2 // indirect

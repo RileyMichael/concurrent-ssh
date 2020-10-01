@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	gobrex "github.com/kujtimiihoxha/go-brace-expansion"
 	"github.com/rileymichael/concurrent-ssh/pkg/concurrent"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -51,7 +52,13 @@ func processInput(cmd *cobra.Command) ([]string, int) {
 		targets = strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	}
 
-	return targets, limit
+	// expand targets
+	var all []string
+	for _, target := range targets {
+		all = append(all, gobrex.Expand(target)...)
+	}
+
+	return all, limit
 }
 
 func main() {
