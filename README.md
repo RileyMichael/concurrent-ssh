@@ -1,7 +1,7 @@
 # concurrent-ssh
 easily execute ssh commands against multiple hosts
 
-### usage
+## usage
 you can pass target hosts as comma separated inputs with `--targets` or `-t` shorthand:
 ```bash
 cssh --targets host1,host2
@@ -23,8 +23,7 @@ You can override default concurrency limit of 25 by passing in `--limit` or `-l`
 cssh --targets host1,host2 --limit 1 -- date
 ```
 
-### todo
-- refactor to enable other tools (scp, rsync, etc)
+## todo
 - expansion of targets (something like `--targets 127.0.0.{1..3}`)
 - better output (prepend hosts for clarity / blocks / colors)
 - tests (lol)
