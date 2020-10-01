@@ -1,4 +1,7 @@
 # concurrent-ssh
+![CI](https://github.com/rileymichael/concurrent-ssh/workflows/CI/badge.svg)
+![Latest Release](https://img.shields.io/github/v/release/rileymichael/concurrent-ssh)
+
 easily execute ssh commands against multiple hosts
 
 ## usage
@@ -26,4 +29,4 @@ so be sure to setup your ssh keys / ssh-agent appropriately
 ## todo
 - tests (lol)
 - benchmark against pssh (anecdotally this is marginally faster on my machine with 1-10 hosts)
-- use goreleaser to build/publish releases
+- publish homebrew tap recipe w/goreleaser

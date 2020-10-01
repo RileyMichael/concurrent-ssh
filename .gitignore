@@ -1,3 +1,6 @@
+# go
+dist/
+
 # editor
 .idea/
 

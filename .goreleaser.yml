@@ -1,0 +1,24 @@
+before:
+  hooks:
+    - go mod download
+builds:
+  - id: cssh
+    main: ./cmd/cssh
+    binary: cssh
+    env:
+      - CGO_ENABLED=0
+    goarch:
+      - amd64
+      - arm64
+    goarm:
+      - 6
+      - 7
+archives:
+  - id: cssh-archive
+    name_template: "cssh_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    builds:
+      - cssh
+    replacements:
+      amd64: x86_64
+checksum:
+  name_template: 'checksums.txt'
