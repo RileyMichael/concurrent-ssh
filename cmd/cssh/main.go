@@ -16,6 +16,10 @@ var command = &cobra.Command{
 	Long:  `A simple tool to execute ssh commands against multiple hosts`,
 	Run: func(cmd *cobra.Command, args []string) {
 		targets, limit := processInput(cmd)
+
+		// prepend "-o BatchMode=yes" to args to fail instead of prompt for pass
+		args = append([]string{"-o BatchMode=yes"}, args...)
+
 		commands := concurrent.BuildCommands("ssh", targets, args)
 		concurrent.ExecuteCommands(commands, limit)
 	},
@@ -23,19 +27,21 @@ var command = &cobra.Command{
 
 func init() {
 	command.Flags().StringP("file", "f", "", "file containing target hosts")
-	command.Flags().StringSliceP("targets", "t", nil, "comma separated target hosts")
+	command.Flags().StringP("targets", "t", "", "semi-colon separated target hosts")
 	command.Flags().IntP("limit", "l", 25, "concurrency limit (default 25)")
 }
 
 func processInput(cmd *cobra.Command) ([]string, int) {
 	file, _ := cmd.Flags().GetString("file")
-	targets, _ := cmd.Flags().GetStringSlice("targets")
+	targets, _ := cmd.Flags().GetString("targets")
 	limit, _ := cmd.Flags().GetInt("limit")
 
-	if file != "" && len(targets) > 0 {
+	var hosts []string
+
+	if file != "" && targets != "" {
 		fmt.Println("Both file and targets input supplied; provide only 1.")
 		os.Exit(1)
-	} else if file == "" && len(targets) == 0 {
+	} else if file == "" && targets == "" {
 		fmt.Println("Neither file or targets input supplied; provide 1.")
 		os.Exit(1)
 	}
@@ -49,13 +55,15 @@ func processInput(cmd *cobra.Command) ([]string, int) {
 		}
 
 		// trim last newline if exists & split on newlines
-		targets = strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
+		hosts = strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
+	} else {
+		hosts = strings.Split(targets, ";")
 	}
 
 	// expand targets
 	var all []string
-	for _, target := range targets {
-		all = append(all, gobrex.Expand(target)...)
+	for _, host := range hosts {
+		all = append(all, gobrex.Expand(host)...)
 	}
 
 	return all, limit
