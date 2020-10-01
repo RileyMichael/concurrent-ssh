@@ -25,7 +25,6 @@ cssh --targets host1,host2 --limit 1 -- date
 ```
 
 ## todo
-- better output (prepend hosts for clarity / blocks / colors)
 - tests (lol)
 - benchmark against pssh (anecdotally this is marginally faster on my machine with 1-10 hosts)
 - use goreleaser to build/publish releases

@@ -13,7 +13,7 @@ import (
 var command = &cobra.Command{
 	Use:   "cssh",
 	Short: "ssh, but concurrent",
-	Long: `A simple tool to execute ssh commands against multiple hosts`,
+	Long:  `A simple tool to execute ssh commands against multiple hosts`,
 	Run: func(cmd *cobra.Command, args []string) {
 		targets, limit := processInput(cmd)
 		commands := concurrent.BuildCommands("ssh", targets, args)
